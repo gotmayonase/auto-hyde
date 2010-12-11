@@ -15,16 +15,19 @@ h2. Requirements
   You obviously will also need jekyll installed, though the only thing required by this app is access to the jekyll binary.
 
 h2. Installation
-
+  
+  <pre>
   git clone git@github.com:gotmayonase/auto-hyde.git
   rake install
   
   OR
   
   gem install auto-hyde
+  </pre>
 
 h2. Running AutoHyde
-
+  
+  <pre>
   Usage: auto-hyde [options]
       -e, --email EMAIL_ADDRESS        Send email notification of failures to this email address
       -d, --jekyll-dir DIR             Location of your Jekyll project directory, defaults to this directory
@@ -32,6 +35,7 @@ h2. Running AutoHyde
       -p, --port PORT                  Port for Sinatra to run on, defaults to 4567
           --pygments                   Turn on Pygment syntax highlighting for Jekyll, defaults to off
       -h, --help                       Show this message
+  </pre>
 
 h2. Contributors
 
