@@ -1,0 +1,42 @@
+h1. AutoHyde
+
+h2. Description
+
+  AutoHyde is a simple Sinatra application that exposes a single route, /auto-hyde.  The purpose is to easily allow you to create
+  a GitHub post-receive hook that rebuilds your Jekyll blog or application.
+  
+h2. Requirements
+
+  Gems
+  * sinatra, >= 1.1.0
+  * systemu, >= 1.2.0
+  * pony, >= 1.1
+  
+  You obviously will also need jekyll installed, though the only thing required by this app is access to the jekyll binary.
+
+h2. Installation
+
+  git clone git@github.com:gotmayonase/auto-hyde.git
+  rake install
+  
+  OR
+  
+  gem install auto-hyde
+
+h2. Running AutoHyde
+
+  Usage: auto-hyde [options]
+      -e, --email EMAIL_ADDRESS        Send email notification of failures to this email address
+      -d, --jekyll-dir DIR             Location of your Jekyll project directory, defaults to this directory
+      -b, --build-dir DIR              Location Jekyll will build your site to, defaults to './_site'
+      -p, --port PORT                  Port for Sinatra to run on, defaults to 4567
+          --pygments                   Turn on Pygment syntax highlighting for Jekyll, defaults to off
+      -h, --help                       Show this message
+
+h2. Contributors
+
+  * Mike Mayo
+
+h2. Copyright
+
+  Copyright (c) 2010 Mike Mayo. See LICENSE.txt for further details.

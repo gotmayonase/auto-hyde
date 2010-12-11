@@ -15,14 +15,14 @@ Jeweler::Tasks.new do |gem|
   gem.name = "auto-hyde"
   gem.homepage = "http://github.com/gotmayonase/auto-hyde"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "mike@wieck.com"
+  gem.summary = %Q{A simple sinatra app exposing a url for github post-receive hooks to hit and trigger a rebuild of a Jekyll site.}
+  gem.description = %Q{}
+  gem.email = "gotmayonase@gmail.com"
   gem.authors = ["Mike Mayo"]
-  # Include your dependencies below. Runtime dependencies are required when using your gem,
-  # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
-  #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
-  #  gem.add_development_dependency 'rspec', '> 1.2.3'
+  gem.add_dependency 'sinatra', '>= 1.1.0'
+  gem.add_dependency 'systemu', '>= 1.2.0'
+  gem.add_dependency 'pony', '>= 1.1'
+  gem.executables << 'auto-hyde'
 end
 Jeweler::RubygemsDotOrgTasks.new
 

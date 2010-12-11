@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'optparse'
+require 'pathname'
+require 'daemons'
+require Pathname(__FILE__).dirname + '../lib/auto-hyde'
+
+jekyll_bin = `which jekyll`.chomp
+if jekyll_bin.empty? || jekyll_bin.nil?
+  puts('No Jekyll binary found, exiting...') 
+  exit(1)
+end
+
+# =====================================================================================================================
+# Parse Command Line Options
+# =====================================================================================================================
+
+options = {
+  :build_dir => './_site',
+  :jekyll_dir => './',
+  :pygments => false,
+  :email => nil,
+  :jekyll_bin => jekyll_bin
+}
+
+option_parser = OptionParser.new do |opts|
+  opts.banner = "Usage: auto-hyde [options]"
+  # opts.on('-c', '--config-file PATH', 'Path to a YAML config file') { |config_file| options[:config_file] = config_file}
+  opts.on('-e', '--email EMAIL_ADDRESS', 'Send email notification of failures to this email address') { |email| options[:email] = email }
+  opts.on('-d', '--jekyll-dir DIR', 'Location of your Jekyll project directory, defaults to this directory') { |jekyll_dir| options[:jekyll_dir] = jekyll_dir }
+  opts.on('-b', '--build-dir DIR', "Location Jekyll will build your site to, defaults to './_site'") { |build_dir| options[:build_dir] = build_dir }
+  opts.on('-p', '--port PORT', 'Port for Sinatra to run on, defaults to 4567') { |port| options[:port] = port }
+  opts.on(nil, '--pygments', 'Turn on Pygment syntax highlighting for Jekyll, defaults to off') { options[:pygments] = true }
+  opts.on("-h", "--help", "Show this message") { puts opts; exit; }
+end
+option_parser.parse!
+
+options.each do |key, value|
+  AutoHyde.set key, value
+end
+
+pid = fork do
+  Signal.trap('HUP', 'IGNORE') # Don't die upon logout
+  STDOUT.reopen "/dev/null"
+  STDERR.reopen "/dev/null"
+  at_exit {
+    File.unlink('auto-hyde.pid')
+  }
+  AutoHyde.run!
+end
+
+File.open('auto-hyde.pid','w') { |f| f << pid }
+puts "AutoHyde starting up with pid #{pid}."
+
+Process.detach(pid)

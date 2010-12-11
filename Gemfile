@@ -11,3 +11,7 @@ group :development do
   gem "jeweler", "~> 1.5.1"
   gem "rcov", ">= 0"
 end
+
+gem "sinatra", ">= 1.1.0"
+gem "systemu", ">= 1.2.0"
+gem "pony", ">= 1.1"
