@@ -20,7 +20,9 @@ options = {
   :jekyll_dir => './',
   :pygments => false,
   :email => nil,
-  :jekyll_bin => jekyll_bin
+  :jekyll_bin => jekyll_bin,
+  :log_file => 'log/auto-hyde.log',
+  :error_file => 'log/auto-hyde-err.log'
 }
 
 option_parser = OptionParser.new do |opts|
@@ -35,14 +37,20 @@ option_parser = OptionParser.new do |opts|
 end
 option_parser.parse!
 
+logfile = options.delete :log_file
+errfile = options.delete :error_file
+
+FileUtils.mkdir_p(File.dirname(logfile))
+FileUtils.mkdir_p(File.dirname(errfile))
+
 options.each do |key, value|
   AutoHyde.set key, value
 end
 
 pid = fork do
   Signal.trap('HUP', 'IGNORE') # Don't die upon logout
-  STDOUT.reopen "/dev/null"
-  STDERR.reopen "/dev/null"
+  STDOUT.reopen File.new(logfile, 'a')
+  STDERR.reopen File.new(logfile, 'a')
   at_exit {
     File.unlink('auto-hyde.pid')
   }

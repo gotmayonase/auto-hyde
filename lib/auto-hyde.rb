@@ -6,7 +6,9 @@ require 'sinatra/base'
 # =====================================================================================================================
 
 class AutoHyde < Sinatra::Base
-
+  
+  set :logging, true
+  
   EMAIL_TEMPLATE = <<-EMAIL
     Your Jekyll rebuild failed at #{Time.now} with the following error:
     #{@error}
